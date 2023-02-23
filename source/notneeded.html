@@ -1,0 +1,134 @@
+<html>
+  <head>
+
+    <title>DJ Roomba Project 3</title>
+
+    <style>
+      body {
+        background: rgb(2,0,36);
+        background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgb(55, 0, 77) 35%, rgb(97, 0, 32) 100%);
+    }
+    </style>
+
+    <style>
+        #login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            font-size: 25px;
+            font-weight: 1000;
+        }
+
+        #username {
+            text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(255, 255, 255), -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255);
+        }
+
+        #password {
+            text-shadow: -1px -1px 0 rgb(255, 255, 255), 1px -1px 0 rgb(255, 255, 255), -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255);
+        }
+
+        /* login form */
+        form {
+            background: rgb(2,0,36);
+            background: linear-gradient(45deg, rgb(5, 0, 102) 0%, rgb(91, 0, 128) 35%, rgb(158, 0, 53) 100%);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            display: grid;
+        }
+
+        /* input fields */
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            border:black;
+            
+
+        }
+
+        /* submit button */
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: rgb(0, 0, 0);
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+    </style>
+
+    <script src="https://aws-amplify.github.io/aws-amplify/media/aws-amplify.min.js"></script>
+
+    <script>
+
+        var auth = new AWS.CognitoIdentityServiceProvider.AuthenticationDetails({
+        Username : 'username',
+        Password : 'password',
+        });
+        var cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser({
+        Username : 'username',
+        Pool : userPool
+        });
+        cognitoUser.authenticateUser(auth, {
+        onSuccess: function (result) {
+            console.log('access token + ' + result.getAccessToken().getJwtToken());
+        },
+        onFailure: function(err) {
+            alert(err);
+        },
+        });
+
+        function checkCredentials() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        if (username === "correctusername" && password === "correctpassword") {
+            setTimeout(function(){
+            window.location.href = "main.html";
+            }, 3000);
+
+
+            document.getElementById("login-button").style.display = "none";
+            document.getElementById("success-gif").innerHTML = '<img src="https://media.tenor.com/9d4_n8NxdagAAAAC/let-me-in-eric-andre.giff" alt="Success GIF">';
+        } else {
+            alert("Incorrect username or password");
+        }
+        }
+
+</script>
+    
+    <button id="Button">DJ Roomba!</button>
+
+<script>
+  const button = document.getElementById("Button");
+  
+  button.addEventListener("click", function() {
+    // Perform the pipeline change here
+    console.log("Button clicked!");
+  });
+</script>
+    </head>
+
+    <body>
+    
+        <div id="login">
+            <form id="login-form">
+                <label id="username" for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <label id="password" for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <input type="submit" value="Login" id="login-button" onclick="checkCredentials()">
+              </form>
+              <img src="success.gif" id="success-gif" style="display: none;">
+        </div>
+      
+      
+
+    </body>
+</html>

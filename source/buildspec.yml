@@ -1,0 +1,11 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Copying files to S3 bucket...
+      - ls -la
+      - aws s3 cp "./source/index.html" "s3://s3-website-roomba.team.com/"
+  post_build:
+    commands:
+      - echo Build completed on `date`

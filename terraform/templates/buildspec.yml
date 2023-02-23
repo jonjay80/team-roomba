@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entering install phase...
+      - echo Installing Terraform...
+      - yum install -y yum-utils
+      - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+      - yum -y install terraform
+      - echo Terraform installed successfully!
+
+  build:
+    commands:
+      - echo Entering build phase...
+      - echo Running Terraform apply...
+      - cd terraform
+      - terraform init
+      - terraform -version
+      - terraform apply --auto-approve
+      - echo Terraform apply finished successfully!
+
+cache:
+  paths:
+    - /usr/local/bin/terraform
