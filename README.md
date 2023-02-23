@@ -9,4 +9,4 @@ Jonathan
 Adedayo
 
 # Architecture
-![Initial Architecture](docs/images/p3diagram.png)
+![Initial Architecture](docs/images/p3diagram.PNG)
